@@ -1,0 +1,1 @@
+﻿Allows you to create playable sectopod. Credits to https://www.nexusmods.com/xcom2/users/71160223 for the base mod.

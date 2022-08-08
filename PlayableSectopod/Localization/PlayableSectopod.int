@@ -1,0 +1,51 @@
+[UICustomize_AlienInfo]
+m_strTitle=EDIT ALIEN INFO
+m_strFirstNameLabel=First Name
+m_strLastNameLabel=Last Name
+m_strNicknameLabel=Nickname
+m_strEditBiography=Biography
+m_strGender=Gender
+m_strNationality=Nationality
+m_strBiographyLabel=CHARACTER BIOGRAPHY
+
+[PA_Sectopod_TechTemplate X2TechTemplate]
+DisplayName="Remade a Sectopod"
+Summary="Though the process would be extremely expensive and time consuming, Sectopod components can be reformed into a new Sectopod""
+CodeName="Goliath"
+LongDescript="We were sucessful in our recreation of a sectopod"
+
+[Country_Mec X2CountryTemplate]
+DisplayName="Mec"
+DisplayNameWithArticle="Mec"
+DisplayNameWithArticleLower="Mec"
+DisplayNamePossessive="Mec's"
+DisplayAdjective="Mechanical"
+
+[X2EventListener_AlienCapture]
+JoinedXCOMTitle="Retrieval Success"
+JoinedXCOM="<XGParam:StrValue0/!UnitName/> will join XCOM after the mission."
+
+LootTitle="Loot Bonus"
+Loot="Bonus loot was gained from the capture."
+
+[PA_SectopodGun X2WeaponTemplate]
+FriendlyName="Sectopod Blaster"
+BriefSummary="Sectopod Blaster"
+TacticalText="<Bullet/> Sectopod Blaster. <Bullet/> Not usable by human soldiers -- Just don't, we had soldier *redacted* who already tried before... Just don't"
+AbilityDescName="Sectopod Blaster"
+
+[PA_Sectopod_Wrathcannon_WPN X2WeaponTemplate]
+FriendlyName="Sectopod Wrath Cannon"
+BriefSummary="Sectopod Whrath Cannon"
+TacticalText="<Bullet/> Sectopod Warth Cannon. <Bullet/> Not usable by human soldiers -- No, DON'T EVEN THINK ABOUT IT"
+AbilityDescName="Sectopod Wrath Cannon"
+
+[XGCharacterGenerator_Sectopod]
+SectopodFirstName="Sectopod"
+SectopodLastNamePrefix="Sectopod"
+
+[PA_Telejump X2Ability]
+LocFriendlyName="Short range Teleport"
+LocLongDescription="The Sectopod can use an advanced mechanism to teleport itself ."
+LocHelpText="Teleport"
+LocFlyOverText="Teleport"

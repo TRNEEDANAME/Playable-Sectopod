@@ -1,0 +1,202 @@
+[Reward_Sectopod X2RewardTemplate]
+DisplayName="Sectopod Unit"
+RewardDetails="XCOM gets a Sectopod."
+
+; ============================================================
+: Class template
+; ============================================================
+
+[SectopodClass X2SoldierClassTemplate]
++DisplayName="Sectopod"
++ClassSummary="Very powerful mechanical units, it's almost indestructible"
++LeftAbilityTreeTitle="Sectopod"
++RightAbilityTreeTitle="Sectopod"
++AbilityTreeTitles[0]="Sectopod"
+
+;ALPHABETICAL ORDER
++RandomNickNames[0]="All Day"
++RandomNickNames[1]="All In"
++RandomNickNames[2]="Animal"
++RandomNickNames[3]="Baller"
++RandomNickNames[4]="Big Country"
++RandomNickNames[5]="Big Money"
++RandomNickNames[6]="Big Nasty"
++RandomNickNames[7]="Blaze"
++RandomNickNames[8]="Boom Boom"
++RandomNickNames[9]="Boomer"
++RandomNickNames[10]="Bomber"
++RandomNickNames[11]="Bulldog"
++RandomNickNames[12]="Bull Rush"
++RandomNickNames[13]="Claymore"
++RandomNickNames[14]="Demo"
++RandomNickNames[15]="Defcon"
++RandomNickNames[16]="Devil Dog"
++RandomNickNames[17]="Diesel"
++RandomNickNames[18]="Encore"
++RandomNickNames[19]="Fireball"
++RandomNickNames[20]="Fridge"
++RandomNickNames[21]="Gunner"
++RandomNickNames[22]="Hammer"
++RandomNickNames[23]="Hellfire"
++RandomNickNames[24]="Hightower"
++RandomNickNames[25]="Hoss"
++RandomNickNames[26]="Volcano"
++RandomNickNames[27]="Hurricane"
++RandomNickNames[28]="Junkyard"
++RandomNickNames[29]="Juggernaut"
++RandomNickNames[30]="Knockout"
++RandomNickNames[31]="Kong"
++RandomNickNames[32]="Mad Dog"
++RandomNickNames[33]="Meltdown"
++RandomNickNames[34]="Moose"
++RandomNickNames[35]="Nova"
++RandomNickNames[36]="Nitro"
++RandomNickNames[37]="Nukes"
++RandomNickNames[38]="Ogre"
++RandomNickNames[39]="Pitbull"
++RandomNickNames[40]="Pyro"
++RandomNickNames[41]="Redline"
++RandomNickNames[42]="Rhino"
++RandomNickNames[43]="Rocket"
++RandomNickNames[44]="Seabreeze"
++RandomNickNames[45]="Slab"
++RandomNickNames[46]="Smash"
++RandomNickNames[47]="Spitfire"
++RandomNickNames[48]="Smokey"
++RandomNickNames[49]="Swamp Thing"
++RandomNickNames[50]="T-Bone"
++RandomNickNames[51]="T-Rex"
++RandomNickNames[52]="Tank"
++RandomNickNames[53]="Thumper"
++RandomNickNames[54]="Thunder"
++RandomNickNames[55]="Tickle"
++RandomNickNames[56]="Tiny"
++RandomNickNames[57]="Titan"
++RandomNickNames[58]="Dynamite"
++RandomNickNames[59]="Torch"
++RandomNickNames[60]="Wardog"
++RandomNickNames[61]="Warhorse"
++RandomNickNames[62]="Wildchild"
+;ALPHABETICAL ORDER
++RandomNicknames_Male[0]="Barbarian"
++RandomNickNames_Male[1]="Big Boy"
++RandomNicknames_Male[2]="Boss Man"
++RandomNickNames_Male[3]="Cowboy"
++RandomNickNames_Male[4]="Meathead"
++RandomNickNames_Male[5]="Nero"
++RandomNickNames_Male[6]="Papa Bear"
++RandomNickNames_Male[7]="Wildman"
++RandomNickNames_Female[0]="Amazon"
++RandomNicknames_Female[1]="Boss Lady"
++RandomNickNames_Female[2]="Cowgirl"
++RandomNicknames_Female[3]="Domino"
++RandomNickNames_Female[4]="Freya"
++RandomNickNames_Female[5]="Mama Bear"
++RandomNickNames_Female[6]="Deep Six"
++RandomNickNames_Female[7]="Firebug"
+
+; ============================================================
+; Photobooth Lines
+; ============================================================
+
+;ALPHABETICAL ORDER
++PhotoboothSoloBLines_Male[0]="Bringing the Boom!"
++PhotoboothSoloBLines_Male[1]="The forecast calles for... COLLATERAL DAMAGE."
++PhotoboothSoloBLines_Male[2]="No Cover. No Mercy."
++PhotoboothSoloBLines_Male[3]="Artillery. Danger Close."
++PhotoboothSoloBLines_Male[4]="Tick, tick, BOOM!"
++PhotoboothSoloBLines_Male[5]="Bombs away!"
++PhotoboothSoloBLines_Male[6]="Bullets: the more the merrier!"
++PhotoboothSoloBLines_Male[7]="Call him the weatherman, because he'll make it rain."
++PhotoboothSoloBLines_Male[8]="Once more into the breach!"
++PhotoboothSoloBLines_Male[9]="Stealth is overrated."
+
++PhotoboothSoloBLines_Female[0]="Bringing the Boom!"
++PhotoboothSoloBLines_Female[1]="The forecast calles for... COLLATERAL DAMAGE."
++PhotoboothSoloBLines_Female[2]="No Cover. No Mercy."
++PhotoboothSoloBLines_Female[3]="Artillery. Danger Close."
++PhotoboothSoloBLines_Female[4]="Tick, tick, BOOM!"
++PhotoboothSoloBLines_Female[5]="Bombs away!"
++PhotoboothSoloBLines_Female[6]="Bullets: the more the merrier!"
++PhotoboothSoloBLines_Female[7]="Call him the weatherman, because he'll make it rain."
++PhotoboothSoloBLines_Female[8]="Once more into the breach!"
++PhotoboothSoloBLines_Female[9]="Stealth is overrated."
+
+; ============================================================
+; Sectopod weapons
+; ============================================================
+
+[PA_SectopodGun X2WeaponTemplate]
+FriendlyName="Sectopod Blaster"
+BriefSummary="Sectopods Blaster"
+TacticalText="<Bullet/> Sectopod Blaster. <Bullet/> \n <Bullet/> Firing with the Blaster does not end the Sectopod turn.\n Not usable by human soldiers -- it's too big for them to hold!"
+AbilityDescName="Sectopod Blaster"
+
+[PA_Sectopod_Wrathcannon_WPN X2WeaponTemplate]
+FriendlyName="Wrath Cannon"
+BriefSummary="The Wrath Cannon is an extremely high energy attack that deals damage in a long line."
+TacticalText="<Bullet/> The Wrath cannon can devastate your enemies with a long line of energy.\n <Bullet/> It is not usable by human soldiers -- it's too big for them to hold!"
+AbilityDescName="Wrath Cannon"
+
+; ============================================================
+; Sectopod abilities
+; ============================================================
+
+[PA_WrathCannon_Ability X2AbilityTemplate]
+LocFriendlyName="Wrath Cannon"
+LocLongDescription="The Wrath Cannon is an extremely high energy attack that deals damage in a long line."
+LocHelpText="Fire a devastating energy attack that can penetrate multiple targets."
+LocFlyOverText="Wrath Cannon"
+
+[PA_WrathCannonStage1 X2AbilityTemplate]
+LocFriendlyName="Wrath Cannon"
+LocLongDescription="The Wrath Cannon is an extremely high energy attack that deals damage in a long line. The firing of the cannon requires the Sectopod to fully charge a series of emitters, which might give quick victims a chance to run and hide."
+LocHelpText="Power up and fire a devastating attack that can penetrate multiple targets. Takes one turn to prepare."
+LocFlyOverText="Wrath Cannon"
+
+[PA_SectopodGun X2AbilityTemplate]
+LocFriendlyName="Fire Blaster"
+LocLongDescription="The Sectopod has a back-mounted utility blaster that can be used every action to deal with most threats. This weapon can fire in any direction."
+LocHelpText="Fire the Sectopod Blaster at a target."
+LocFlyOverText="Blaster"
+
+[PA_BlasterDuringCannon X2AbilityTemplate]
+LocFriendlyName="Fire Blaster"
+LocLongDescription="The Sectopod has a back-mounted utility blaster that can be used every action to deal with most threats. This weapon can fire in any direction."
+LocHelpText="Fire the Sectopod Blaster at a target."
+LocFlyOverText="Blaster"
+
+[PA_SectopodHigh X2AbilityTemplate]
+LocFriendlyName="High Stance"
+LocLongDescription="The Sectopod can extend its legs to improve its range and weapon reach, and allow it to use the Wrath Cannon against elevated targets."
+LocHelpText="Transition to High Stance, granting a height bonus against ground enemies. This action is free."
+LocFlyOverText="High Stance"
+
+[PA_SectopodLightningField X2AbilityTemplate]
+LocFriendlyName="Lightning Field"
+LocLongDescription="The Sectopod can emit a blast of lightning in a circular area around itself whenever it detects an enemy in melee range."
+LocHelpText="Discharge an electric attack in a radius around the Sectopod."
+LocFlyOverText="Lightning Field"
+
+[PA_SectopodLow X2AbilityTemplate]
+LocFriendlyName="Low Stance"
+LocLongDescription="The Sectopod can return to low stance, to target enemies at ground level with the Wrath Cannon."
+LocHelpText="Transition to Low Stance. This action is free."
+LocFlyOverText="Low Stance"
+
+; ============================================================
+; The rest 
+; ============================================================
+
+[Country_Mec X2CountryTemplate]
+DisplayName="Mec"
+DisplayNameWithArticle="Mec"
+DisplayNameWithArticleLower="Mec"
+DisplayNamePossessive="Mec's"
+DisplayAdjective="Mechanical"
+
+[PA_Sectopod_Tech X2TechTemplate]
+DisplayName="Remake a Sectopod"
+Summary="Though the process would be extremely expensive and time consuming, Sectopod components can be reformed into a new Sectopod for our own usage in the field."
+CodeName="Titan"
+LongDescript="The recreation of a Sectopod was succesful."
