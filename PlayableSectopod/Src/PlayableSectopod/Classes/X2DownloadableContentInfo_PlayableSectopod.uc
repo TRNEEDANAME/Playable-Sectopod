@@ -38,7 +38,7 @@ exec function AddSectopodSquaddie()
 		NewSoldierState.SetHQLocation(eSoldierLoc_Barracks);
 		XComHQ = XComGameState_HeadquartersXCom(NewGameState.ModifyStateObject(class'XComGameState_HeadquartersXCom', XComHQ.ObjectID));
 		XComHQ.AddToCrew(NewGameState, NewSoldierState);
-		NewSoldierState.RankUpSoldier(NewGameState, 'PA_Sectopod_SectopodClass');
+		NewSoldierState.RankUpSoldier(NewGameState, 'PA_SectopodClass');
 		NewSoldierState.ApplySquaddieLoadout(NewGameState, XComHQ);
 		NewSoldierState.ApplyBestGearLoadout(NewGameState);
 		NewSoldierState.SetXPForRank(1);
@@ -54,3 +54,69 @@ exec function AddSectopodSquaddie()
 	}
 }
 
+static event OnLoadedSavedGame()
+{
+    AddTechGameStates();
+}
+static event OnLoadedSavedGameToStrategy()
+{
+    AddTechGameStates();
+}
+
+static function AddTechGameStates()
+{
+    local XComGameStateHistory History;
+    local XComGameState NewGameState;
+    local X2StrategyElementTemplateManager    StratMgr;
+
+    //This adds the techs to games that installed the mod in the middle of a campaign.
+    StratMgr = class'X2StrategyElementTemplateManager'.static.GetStrategyElementTemplateManager();
+    History = `XCOMHISTORY;    
+
+    //Create a pending game state change
+    NewGameState = class'XComGameStateContext_ChangeContainer'.static.CreateChangeState("Adding New Techs");
+
+    //Find tech templates
+    CheckForTech(StratMgr, NewGameState, 'PA_Sectopod_Tech');
+    
+    if( NewGameState.GetNumGameStateObjects() > 0 )
+    {
+        //Commit the state change into the history.
+        History.AddGameStateToHistory(NewGameState);
+    }
+    else
+    {
+        History.CleanupPendingGameState(NewGameState);
+    }
+}
+
+static function CheckForTech(X2StrategyElementTemplateManager StratMgr, XComGameState NewGameState, name ResearchName)
+{
+    local X2TechTemplate TechTemplate;
+
+    if ( !IsResearchInHistory(ResearchName) )
+    {
+        TechTemplate = X2TechTemplate(StratMgr.FindStrategyElementTemplate(ResearchName));
+        if(TechTemplate != none)
+        {
+            NewGameState.CreateNewStateObject(class'XComGameState_Tech', TechTemplate);
+        }
+    }
+}
+
+static function bool IsResearchInHistory(name ResearchName)
+{
+    // Check if we've already injected the tech templates
+    local XComGameState_Tech    TechState;
+    
+    foreach `XCOMHISTORY.IterateByClassType(class'XComGameState_Tech', TechState)
+    {
+        if ( TechState.GetMyTemplateName() == ResearchName )
+        {
+            return true;
+        }
+    }
+    return false;
+
+
+}
