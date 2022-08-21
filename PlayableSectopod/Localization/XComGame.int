@@ -13,6 +13,7 @@ RewardDetails="XCOM gets a Sectopod."
 +RightAbilityTreeTitle="Tank"
 +AbilityTreeTitles[1]="Sectopod "
 +AbilityTreeTitles[2]="Sectopod"
++AbilityTreeTitles[3]="Sectopod"
 
 
 ;ALPHABETICAL ORDER
