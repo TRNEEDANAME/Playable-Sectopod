@@ -94,7 +94,11 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	CharTemplate.Abilities.AddItem('Revive');
 	//CharTemplate.Abilities.AddItem('DevastatingPunch');
 	CharTemplate.Abilities.AddItem('Interact_UseElevator');
-	CharTemplate.Abilities.AddItem('SectopodImmunities');
+	CharTemplate.Abilities.AddItem('PA_SectopodImmunities');
+	CharTemplate.ImmuneTypes.AddItem('Fire');
+	CharTemplate.ImmuneTypes.AddItem('Poison');
+	CharTemplate.ImmuneTypes.AddItem(class'X2Item_DefaultDamageTypes'.default.ParthenogenicPoisonType);
+	CharTemplate.ImmuneTypes.AddItem('Panic');
 
 	// bondmate abilities
 	//CharTemplate.Abilities.AddItem('BondmateResistantWill');

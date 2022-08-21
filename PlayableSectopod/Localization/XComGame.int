@@ -3,15 +3,17 @@ DisplayName="Sectopod Unit"
 RewardDetails="XCOM gets a Sectopod."
 
 ; ============================================================
-: Class template
+; Class template
 ; ============================================================
 
 [SectopodClass X2SoldierClassTemplate]
 +DisplayName="Sectopod"
 +ClassSummary="Very powerful mechanical units, it's almost indestructible"
-+LeftAbilityTreeTitle="Sectopod"
-+RightAbilityTreeTitle="Sectopod"
-+AbilityTreeTitles[0]="Sectopod"
++LeftAbilityTreeTitle="Bullet go brrr"
++RightAbilityTreeTitle="Tank"
++AbilityTreeTitles[1]="Sectopod "
++AbilityTreeTitles[2]="Sectopod"
+
 
 ;ALPHABETICAL ORDER
 +RandomNickNames[0]="All Day"
