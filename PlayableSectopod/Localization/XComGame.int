@@ -187,6 +187,11 @@ LocLongDescription="The Sectopod can return to low stance, to target enemies at 
 LocHelpText="Transition to Low Stance. This action is free."
 LocFlyOverText="Low Stance"
 
+[PA_SectopodInitialState X2AbilityTemplate]
+LocFriendlyName="PLACEHOLDER FOR INITIAL STATE"
+LocLongDescription="PLACEHOLDER DESCRIPTION"
+LocHelpText="PLACEHOLDER TEXT"
+
 ; ============================================================
 ; The rest 
 ; ============================================================

@@ -76,7 +76,6 @@ static function array<X2DataTemplate> CreateTemplates()
 	Templates.AddItem(CreatePA_BlasterShotDuringCannonAbility());
 
     // Template for the High Stance and Low stance ability
-    Templates.AddItem(CreatePA_InitialStateAbility());
 	Templates.AddItem(CreatePA_SectopodHighAbility());
 	Templates.AddItem(CreatePA_SectopodLowAbility());
     
@@ -85,6 +84,7 @@ static function array<X2DataTemplate> CreateTemplates()
 
     // Template fpr the Sectopod immunity ability
 	Templates.AddItem(PurePassive('PA_SectopodImmunities', "img:///UILibrary_PerkIcons.UIPerk_immunities"));
+	Templates.AddItem(CreatePA_InitialStateAbility());
 
 	Templates.AddItem(CreatePA_TeamChangeHandlerAbility());
 	return Templates;
@@ -1164,14 +1164,14 @@ static function X2AbilityTemplate CreatePA_InitialStateAbility()
 	local X2Effect_DamageImmunity DamageImmunity;
 	local X2Effect_TurnStartActionPoints ThreeActionPoints;
 
-	`CREATE_X2ABILITY_TEMPLATE(Template, 'SectopodInitialState');
+	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_SectopodInitialState');
 
 	Template.bDontDisplayInAbilitySummary = default.PA_SectopodInitialStateDontDisplayInAbilitySummary;
 	Template.AbilitySourceName = 'eAbilitySource_Perk';
 	Template.eAbilityIconBehaviorHUD = EAbilityIconBehavior_NeverShow;
 	Template.Hostility = eHostility_Neutral;
 
-	Template.AdditionalAbilities.AddItem('SectopodImmunities');
+	Template.AdditionalAbilities.AddItem('PA_SectopodImmunities');
 
 	Template.AbilityToHitCalc = default.DeadEye;
 	Template.AbilityTargetStyle = default.SelfTarget;
