@@ -77,5 +77,6 @@
     <Content Include="Config\XcomGameData_AbilityData.ini" />
     <Content Include="Src\PlayableSectopod\Classes\X2Ability_PASectopod.uc" />
     <Content Include="Src\PlayableSectopod\Classes\X2Item_PASectopod_Weapons.uc" />
+    <Content Include="Config\XcomInfiltration.ini" />
   </ItemGroup>
 </Project>
