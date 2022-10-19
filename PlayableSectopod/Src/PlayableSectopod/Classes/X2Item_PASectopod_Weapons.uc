@@ -22,7 +22,6 @@ var config int PA_SectopodGun_ClipSize;
 var config int PA_SectopodGun_SoundRange;
 var config int PA_SectopodGun_EnvironmentDamage;
 var config int PA_SectopodGun_IdealRange;
-var config int SECTOPOD_IDEALRANGE;
 
 static function array<X2DataTemplate> CreateTemplates()
 {
