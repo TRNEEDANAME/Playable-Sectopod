@@ -62,8 +62,9 @@ static function X2DataTemplate CreateTemplate_PA_SectopodGun()
 	Template.Abilities.AddItem('HotLoadAmmo');
 	Template.GameArchetype = "WP_Sectopod_Turret.WP_Sectopod_Turret";
 	Template.iPhysicsImpulse = 5;
+
 	Template.CanBeBuilt = false;
-	Template.TradingPostValue = 30;
+	Template.StartingItem = true;
 	Template.bInfiniteItem = true;
 
 	return Template;
@@ -100,7 +101,7 @@ static function X2DataTemplate CreateTemplate_PA_Sectopod_WrathCannon_WPN()
 	Template.iPhysicsImpulse = 5;
 
 	Template.CanBeBuilt = false;
-	Template.TradingPostValue = 30;
+	Template.StartingItem = true;
 
 	return Template;
 }
