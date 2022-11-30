@@ -803,7 +803,7 @@ static function PA_WrathCannonStage1RemovedVisualization(XComGameState Visualize
 
 
 // - Blaster Shot -  Similar to standard shot, except it does not end the turn.
-static function X2AbilityTemplate CreatePA_BlasterShotAbility(optional Name TemplateName = 'Blaster')
+static function X2AbilityTemplate CreatePA_BlasterShotAbility(optional Name TemplateName = 'PA_Blaster')
 {
 	local X2AbilityTemplate	Template;
 	local int				AbilityCostIndex;

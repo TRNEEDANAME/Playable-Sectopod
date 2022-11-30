@@ -46,8 +46,8 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	CharTemplate.bCanTakeCover = false;
 	CharTemplate.bAppearInBase = default.ALIENS_APPEAR_IN_BASE;
 
-	CharTemplate.bIsAlien = true;
-	CharTemplate.bIsAdvent = false;
+	CharTemplate.bIsAlien = false;
+	CharTemplate.bIsAdvent = true;
 	CharTemplate.bIsCivilian = false;
 	CharTemplate.bIsPsionic = false;
 	CharTemplate.bIsRobotic = true;
