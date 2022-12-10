@@ -1246,12 +1246,12 @@ defaultproperties {
 
 PA_HighLowValueName = "HighLowValue"
 PA_HeightChangeEffectName = "PA_SectopodStandUp"
-PA_WrathCannonAbilityName = "WrathCannon"
+PA_WrathCannonAbilityName = "PA_WrathCannon"
 PA_WrathCannonStage1AbilityName = "WrathCannonStage1"
 PA_WrathCannonStage2AbilityName = "WrathCannonStage2"
 PA_WrathCannonStage1EffectName = "WrathCannonStage1Effect"
-PA_HeightChangeEffectName = "SectopodStandUp"
-PA_HighLowValueName = "HighLowValue"
+PA_HeightChangeEffectName = "PA_SectopodStandUp"
+PA_HighLowValueName = "PA_HighLowValue"
 PA_HIGH_STANCE_ENV_DAMAGE_AMOUNT = 30
 PA_HIGH_STANCE_IMPULSE_AMOUNT = 10
 }
