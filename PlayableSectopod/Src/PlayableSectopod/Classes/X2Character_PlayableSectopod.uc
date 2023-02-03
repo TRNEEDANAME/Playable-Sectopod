@@ -118,8 +118,6 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	//CharTemplate.Abilities.AddItem('BondmateReturnFire_Improved_Adjacency');
 	CharTemplate.Abilities.AddItem('BondmateDualStrike');
 
-	CharTemplate.UICustomizationMenuClass = class'UICustomize_AlienMenu';
-	CharTemplate.UICustomizationInfoClass = class'UICustomize_AlienInfo';
 	CharTemplate.strTargetIconImage = class'UIUtilities_Image'.const.TargetIcon_Alien;
 	CharTemplate.strAutoRunNonAIBT = "SoldierAutoRunTree";
 	CharTemplate.CharacterGeneratorClass = class'XGCharacterGenerator_Sectopod';
