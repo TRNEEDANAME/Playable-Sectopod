@@ -86,7 +86,6 @@ static function array<X2DataTemplate> CreateTemplates()
 	Templates.AddItem(PurePassive('PA_SectopodImmunities', "img:///UILibrary_PerkIcons.UIPerk_immunities"));
 	Templates.AddItem(CreatePA_InitialStateAbility());
 
-	Templates.AddItem(CreatePA_TeamChangeHandlerAbility());
 	return Templates;
 }
 
@@ -1207,51 +1206,15 @@ static function X2AbilityTemplate CreatePA_InitialStateAbility()
 	return Template;
 }
 
-static function X2AbilityTemplate CreatePA_TeamChangeHandlerAbility()
-{
-	local X2AbilityTemplate					Template;
-	local X2AbilityTrigger_EventListener	Trigger;
-	local X2Effect_RemoveEffects RemoveEffects;
-
-	`CREATE_X2ABILITY_TEMPLATE(Template, 'SectopodNewTeamState');
-
-	Template.bDontDisplayInAbilitySummary = true;
-	Template.AbilitySourceName = 'eAbilitySource_Perk';
-	Template.eAbilityIconBehaviorHUD = EAbilityIconBehavior_NeverShow;
-	Template.Hostility = eHostility_Neutral;
-
-	Template.AbilityToHitCalc = default.DeadEye;
-	Template.AbilityTargetStyle = default.SelfTarget;
-
-	Trigger = new class'X2AbilityTrigger_EventListener';
-	Trigger.ListenerData.Deferral = ELD_OnStateSubmitted;
-	Trigger.ListenerData.EventID = 'UnitChangedTeam';
-	Trigger.ListenerData.Filter = eFilter_Unit;
-	Trigger.ListenerData.EventFn = class'XComGameState_Ability'.static.AbilityTriggerEventListener_Self;
-	Template.AbilityTriggers.AddItem(Trigger);
-
-	// remove these effects when hacked.
-	RemoveEffects = new class'X2Effect_RemoveEffects';
-	RemoveEffects.EffectNamesToRemove.AddItem(default.PA_WrathCannonStage1EffectName);
-	Template.AddShooterEffect(RemoveEffects);
-
-	Template.bSkipFireAction = true;
-	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
-	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;
-
-	return Template;
-}
 
 defaultproperties {
 
 PA_HighLowValueName = "HighLowValue"
 PA_HeightChangeEffectName = "PA_SectopodStandUp"
-PA_WrathCannonAbilityName = "PA_WrathCannon"
+PA_WrathCannonAbilityName = "PA_WrathCannon_Ability"
 PA_WrathCannonStage1AbilityName = "WrathCannonStage1"
 PA_WrathCannonStage2AbilityName = "WrathCannonStage2"
 PA_WrathCannonStage1EffectName = "WrathCannonStage1Effect"
 PA_HeightChangeEffectName = "PA_SectopodStandUp"
 PA_HighLowValueName = "PA_HighLowValue"
-PA_HIGH_STANCE_ENV_DAMAGE_AMOUNT = 30
-PA_HIGH_STANCE_IMPULSE_AMOUNT = 10
 }

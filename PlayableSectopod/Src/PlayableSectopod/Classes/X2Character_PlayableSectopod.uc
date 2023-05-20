@@ -21,8 +21,10 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 
 	CharTemplate.strPawnArchetypes.AddItem("GameUnit_Sectopod.ARC_GameUnit_Sectopod");
 
-	CharTemplate.strMatineePackages.AddItem("CIN_Sectopod");
-	CharTemplate.strTargetingMatineePrefix = "CIN_Sectopod_FF_StartPos";
+	CharTemplate.strMatineePackages.AddItem("CIN_Berserker");
+	CharTemplate.strMatineePackages.AddItem("CIN_Muton");
+	CharTemplate.strTargetingMatineePrefix = "CIN_Muton_FF_StartPos";
+	CharTemplate.strMatineePackages.AddItem("CIN_Soldier");
 	CharTemplate.strIntroMatineeSlotPrefix = "Soldier";
 	CharTemplate.strLoadingMatineeSlotPrefix = "Soldier";
 	CharTemplate.bHasCharacterExclusiveAppearance = true;
@@ -44,25 +46,24 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	CharTemplate.bCanTakeCover = false;
 	CharTemplate.bAppearInBase = default.ALIENS_APPEAR_IN_BASE;
 
-	CharTemplate.bIsAlien = false;
-	CharTemplate.bIsAdvent = true;
+	CharTemplate.bIsAlien = true;
+	CharTemplate.bIsAdvent = false;
 	CharTemplate.bIsCivilian = false;
 	CharTemplate.bIsPsionic = false;
-	CharTemplate.bIsRobotic = true;
+	CharTemplate.bIsRobotic = false;
 	CharTemplate.bIsSoldier = true;
-	CharTemplate.bWeakAgainstTechLikeRobot = true;
 
 	CharTemplate.bCanBeTerrorist = false;
-	CharTemplate.bCanBeCriticallyWounded = false;
+	CharTemplate.bCanBeCriticallyWounded = true;
 	CharTemplate.bIsAfraidOfFire = false;
-	CharTemplate.bCanBeCarried = false;	
-	CharTemplate.bCanBeRevived = false;
-	CharTemplate.bUsePoolSoldiers = false;
-	CharTemplate.bStaffingAllowed = false;
-	CharTemplate.bAppearInBase = false;
-	CharTemplate.bWearArmorInBase = false;
+	CharTemplate.bCanBeCarried = true;	
+	CharTemplate.bCanBeRevived = true;
+	CharTemplate.bUsePoolSoldiers = true;
+	CharTemplate.bStaffingAllowed = true;
+	CharTemplate.bAppearInBase = true;
+	CharTemplate.bWearArmorInBase = true;
 	CharTemplate.bAllowSpawnFromATT = false;
-	CharTemplate.bUsesWillSystem = false;
+	CharTemplate.bUsesWillSystem = true;
 	CharTemplate.bIsTooBigForArmory = true;
 
 	CharTemplate.DefaultSoldierClass = 'SectopodClass';
@@ -91,12 +92,24 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	CharTemplate.Abilities.AddItem('DisableConsumeAllPoints');
 	CharTemplate.Abilities.AddItem('Revive');
 	//CharTemplate.Abilities.AddItem('DevastatingPunch');
-	CharTemplate.Abilities.AddItem('Interact_UseElevator');
-	CharTemplate.Abilities.AddItem('PA_SectopodImmunities');
-	CharTemplate.ImmuneTypes.AddItem('Fire');
-	CharTemplate.ImmuneTypes.AddItem('Poison');
-	CharTemplate.ImmuneTypes.AddItem(class'X2Item_DefaultDamageTypes'.default.ParthenogenicPoisonType);
-	CharTemplate.ImmuneTypes.AddItem('Panic');
+
+	// bondmate abilities
+	//CharTemplate.Abilities.AddItem('BondmateResistantWill');
+	CharTemplate.Abilities.AddItem('BondmateSolaceCleanse');
+	CharTemplate.Abilities.AddItem('BondmateSolacePassive');
+	CharTemplate.Abilities.AddItem('BondmateTeamwork');
+	CharTemplate.Abilities.AddItem('BondmateTeamwork_Improved');
+	CharTemplate.Abilities.AddItem('BondmateSpotter_Aim');
+	CharTemplate.Abilities.AddItem('BondmateSpotter_Aim_Adjacency');
+	//CharTemplate.Abilities.AddItem('BondmateSpotter_Crit');
+	//CharTemplate.Abilities.AddItem('BondmateSpotter_Crit_Adjacency');
+	//CharTemplate.Abilities.AddItem('BondmateReturnFire_Passive');
+	//CharTemplate.Abilities.AddItem('BondmateReturnFire');
+	//CharTemplate.Abilities.AddItem('BondmateReturnFire_Adjacency');
+	//CharTemplate.Abilities.AddItem('BondmateReturnFire_Improved_Passive');
+	//CharTemplate.Abilities.AddItem('BondmateReturnFire_Improved');
+	//CharTemplate.Abilities.AddItem('BondmateReturnFire_Improved_Adjacency');
+	CharTemplate.Abilities.AddItem('BondmateDualStrike');
 
 	CharTemplate.strTargetIconImage = class'UIUtilities_Image'.const.TargetIcon_Alien;
 	CharTemplate.strAutoRunNonAIBT = "SoldierAutoRunTree";

@@ -39,6 +39,9 @@
     <Content Include="Config\XComStrategyTuning.ini">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Config\XComWeaponTuning.ini">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Content\BetterSectopods.upk">
       <SubType>Content</SubType>
     </Content>

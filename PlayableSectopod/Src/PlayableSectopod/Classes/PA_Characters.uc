@@ -1,4 +1,4 @@
-class PA_Characters extends X2Character config(GameData_CharacterStats) config (PlayableSectopod);
+class PA_Characters extends X2Character config(GameData_CharacterStats);
 
 static function array<X2DataTemplate> CreateTemplates()
 {
@@ -42,7 +42,7 @@ static function X2CharacterTemplate CreateTemplate_PA_Sectopod()
 	CharTemplate.bCanTakeCover = false;
 	CharTemplate.bSkipDefaultAbilities = true;
 
-	CharTemplate.bIsAlien = true;
+	CharTemplate.bIsAlien = false;
 	CharTemplate.bIsAdvent = false;
 	CharTemplate.bIsCivilian = false;
 	CharTemplate.bIsPsionic = false;
@@ -63,10 +63,8 @@ static function X2CharacterTemplate CreateTemplate_PA_Sectopod()
 	CharTemplate.Abilities.AddItem('StandardMove');
 	CharTemplate.Abilities.AddItem('PA_SectopodHigh');
 	CharTemplate.Abilities.AddItem('PA_SectopodLow');
-	CharTemplate.Abilities.AddItem('PA_SectopodLightningField');
 	CharTemplate.Abilities.AddItem('DeathExplosion');
 	CharTemplate.Abilities.AddItem('PA_SectopodInitialState');
-	CharTemplate.Abilities.AddItem('PA_Telejump');
 	CharTemplate.Abilities.AddItem('PA_SectopodImmunities');
 
 	
