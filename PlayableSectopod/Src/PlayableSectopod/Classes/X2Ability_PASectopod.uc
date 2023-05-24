@@ -896,7 +896,7 @@ static function X2AbilityTemplate CreatePA_SectopodHighAbility()
 	local X2Condition_UnitValue				IsLow;
 	local X2Condition_UnitValue				IsNotImmobilized;
 
-	`CREATE_X2ABILITY_TEMPLATE(Template, 'SectopodHigh');
+	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_SectopodHigh');
 	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_sectopod_heightchange"; // TODO: This needs to be changed
 	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_ShowIfAvailable;
 	Template.Hostility = eHostility_Neutral;
@@ -988,7 +988,7 @@ static function X2AbilityTemplate CreatePA_SectopodLowAbility()
 	local X2Condition_UnitValue				IsNotImmobilized;
 	local X2Effect_RemoveEffects			RemoveEffect;
 
-	`CREATE_X2ABILITY_TEMPLATE(Template, 'SectopodLow');
+	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_SectopodLow');
 	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_sectopod_lowstance";
 	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_ShowIfAvailable;
 	Template.Hostility = eHostility_Neutral;
@@ -1212,8 +1212,8 @@ defaultproperties {
 PA_HighLowValueName = "HighLowValue"
 PA_HeightChangeEffectName = "PA_SectopodStandUp"
 PA_WrathCannonAbilityName = "PA_WrathCannon_Ability"
-PA_WrathCannonStage1AbilityName = "WrathCannonStage1"
-PA_WrathCannonStage2AbilityName = "WrathCannonStage2"
+PA_WrathCannonStage1AbilityName = "PA_WrathCannonStage1"
+PA_WrathCannonStage2AbilityName = "PA_WrathCannonStage2"
 PA_WrathCannonStage1EffectName = "WrathCannonStage1Effect"
 PA_HeightChangeEffectName = "PA_SectopodStandUp"
 PA_HighLowValueName = "PA_HighLowValue"
