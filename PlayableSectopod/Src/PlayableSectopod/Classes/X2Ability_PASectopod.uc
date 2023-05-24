@@ -1046,7 +1046,7 @@ static function X2AbilityTemplate CreatePA_SectopodLightningFieldAbility()
 	local X2AbilityCooldown_LocalAndGlobal Cooldown;
 	
 	
-	`CREATE_X2ABILITY_TEMPLATE(Template, 'SectopodLightningField');
+	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_SectopodLightningField');
 	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_lightningfield";
 	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_AlwaysShow;
 	Template.Hostility = eHostility_Offensive;
