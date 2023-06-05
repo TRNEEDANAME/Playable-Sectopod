@@ -93,7 +93,6 @@ static function X2DataTemplate CreateTemplate_PA_Sectopod_WrathCannon_WPN()
 	Template.DamageTypeTemplateName = 'Heavy';
 
 	Template.InventorySlot = eInvSlot_SecondaryWeapon;
-	Template.Abilities.AddItem('PA_WrathCannonStage1');
 
 	// This all the resources; sounds, animations, models, physics, the works.
 	Template.GameArchetype = "WP_Sectopod_Turret.WP_Sectopod_WrathCannon";

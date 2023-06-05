@@ -1,10 +1,5 @@
 class X2Ability_PASectopod extends X2Ability config (GameData_AbilityData);
 
-const PA_SECTOPOD_LOW_VALUE=0;	// Arbitrary value designated as LOW value
-const PA_SECTOPOD_HIGH_VALUE=1;		// Arbitrary value designated as HIGH value
-var name PA_HighLowValueName;
-var name PA_HeightChangeEffectName;
-
 // Those are the variable that are configurable for the playable Sectopod.
 
 // The following variables is for the Wrath Cannon.
@@ -28,18 +23,6 @@ var config bool DontDisplayBlasterAbilityInAbilitySummary;
 var config bool DontDisplayBlasterDuringCannonAbilityInAbilitySummary;
 
 // The following variables is for Height Change.
-var config int PA_HeightChange;
-var config int PA_HighStance_EnvDamage;
-var config int PA_HighStance_Impulse;
-
-// The following variables is for the High ability cost.
-var config bool PA_SectopodHighFreeCost;
-
-var config int PA_SectopodHighActionPointCost;
-
-// The following variables is for the Low ability cost.
-var config bool PA_SectopodLowFreeCost;
-var config int PA_SectopodLowActionPointCost;
 
 // The following variables is for the Lightning ability.
 var config WeaponDamageValue PA_LightningFieldDamage;
@@ -74,10 +57,6 @@ static function array<X2DataTemplate> CreateTemplates()
     // Template for the blaster Shot
 	Templates.AddItem(CreatePA_BlasterShotAbility()); // Standard shot that does not end the turn.
 	Templates.AddItem(CreatePA_BlasterShotDuringCannonAbility());
-
-    // Template for the High Stance and Low stance ability
-	Templates.AddItem(CreatePA_SectopodHighAbility());
-	Templates.AddItem(CreatePA_SectopodLowAbility());
     
     // Template for the Lightning Field ability
     Templates.AddItem(CreatePA_SectopodLightningFieldAbility());
@@ -849,192 +828,6 @@ static function X2AbilityTemplate CreatePA_BlasterShotDuringCannonAbility()
 	return Template;
 }
 
-static function X2Effect_Persistent CreatePA_HeightChangeStatusEffect( )
-{
-	local X2Effect_Persistent   PersistentEffect;
-
-	PersistentEffect = new class'X2Effect_Persistent';
-	PersistentEffect.EffectName = default.PA_HeightChangeEffectName;
-	PersistentEffect.DuplicateResponse = eDupe_Ignore;
-	PersistentEffect.BuildPersistentEffect( 1, true, false );
-	PersistentEffect.EffectAddedFn = PA_StandUpEffectAdded;
-	PersistentEffect.EffectRemovedFn = PA_StandUpEffectRemoved;
-
-	return PersistentEffect;
-}
-
-static function PA_StandUpEffectAdded( X2Effect_Persistent PersistentEffect, const out EffectAppliedData ApplyEffectParameters, XComGameState_BaseObject kNewTargetState, XComGameState NewGameState )
-{
-	local XComGameState_Unit UnitState;
-
-	// change the height
-	UnitState = XComGameState_Unit( NewGameState.ModifyStateObject( class'XComGameState_Unit', ApplyEffectParameters.TargetStateObjectRef.ObjectID ) );
-	UnitState.UnitHeight += default.PA_HeightChange;
-
-	// trigger a move event for new visibility state/tile occupancy
-	`XEVENTMGR.TriggerEvent( 'UnitMoveFinished', UnitState, UnitState, NewGameState );
-}
-
-static function PA_StandUpEffectRemoved( X2Effect_Persistent PersistentEffect, const out EffectAppliedData ApplyEffectParameters, XComGameState NewGameState, bool bCleansed )
-{
-	local XComGameState_Unit UnitState;
-
-	// change the height
-	UnitState = XComGameState_Unit( NewGameState.ModifyStateObject( class'XComGameState_Unit', ApplyEffectParameters.TargetStateObjectRef.ObjectID ) );
-	UnitState.UnitHeight -= default.PA_HeightChange;
-
-	// trigger a move event for new visibility state/tile occupancy
-	`XEVENTMGR.TriggerEvent( 'UnitMoveFinished', UnitState, UnitState, NewGameState );
-}
-
-static function X2AbilityTemplate CreatePA_SectopodHighAbility()
-{
-	local X2AbilityTemplate                 Template;
-	local X2AbilityCost_ActionPoints        ActionPointCost;
-	local X2AbilityTrigger_PlayerInput      InputTrigger;
-	local X2Effect_SetUnitValue				SetHighValue;
-	local X2Condition_UnitValue				IsLow;
-	local X2Condition_UnitValue				IsNotImmobilized;
-
-	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_SectopodHigh');
-	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_sectopod_heightchange"; // TODO: This needs to be changed
-	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_ShowIfAvailable;
-	Template.Hostility = eHostility_Neutral;
-
-	ActionPointCost = new class'X2AbilityCost_ActionPoints';
-	ActionPointCost.iNumPoints = default.PA_SectopodHighActionPointCost;
-	ActionPointCost.bFreeCost = default.PA_SectopodHighFreeCost;
-	Template.AbilityCosts.AddItem(ActionPointCost);
-
-	Template.AbilityToHitCalc = default.DeadEye;
-	Template.AbilityTargetStyle = default.SelfTarget;
-
-	InputTrigger = new class'X2AbilityTrigger_PlayerInput';
-	Template.AbilityTriggers.AddItem(InputTrigger);
-
-	// Set up conditions for Low check.
-	IsLow = new class'X2Condition_UnitValue';
-	IsLow.AddCheckValue(default.PA_HighLowValueName, PA_SECTOPOD_LOW_VALUE, eCheck_Exact);
-	Template.AbilityShooterConditions.AddItem(IsLow);
-
-	IsNotImmobilized = new class'X2Condition_UnitValue';
-	IsNotImmobilized.AddCheckValue(class'X2Ability_DefaultAbilitySet'.default.ImmobilizedValueName, 0);
-	Template.AbilityShooterConditions.AddItem(IsNotImmobilized);
-
-	Template.AbilityShooterConditions.AddItem( default.LivingShooterProperty );
-
-	// ------------
-	// High effect.  
-	// Set value to High.
-	SetHighValue = new class'X2Effect_SetUnitValue';
-	SetHighValue.UnitName = default.PA_HighLowValueName;
-	SetHighValue.NewValueToSet = PA_SECTOPOD_HIGH_VALUE;
-	SetHighValue.CleanupType = eCleanup_BeginTactical;
-	Template.AddTargetEffect(SetHighValue);
-
-	Template.AddTargetEffect( CreatePA_HeightChangeStatusEffect() );
-
-	Template.BuildNewGameStateFn = PA_SectopodHigh_BuildGameState;
-	Template.BuildVisualizationFn = PA_SectopodHighLow_BuildVisualization;
-	Template.bSkipFireAction = true;
-	Template.CinescriptCameraType = "Sectopod_HighStance";
-	
-	return Template;
-}
-
-function XComGameState PA_SectopodHigh_BuildGameState(XComGameStateContext Context)
-{
-	local XComGameState NewState;
-	local XComGameStateContext_Ability AbilityContext;
-	local XComGameState_Unit UnitState, OldUnitState;
-	local Vector UnitLocation;
-	local TTile UnitTile;
-	local XComGameState_EnvironmentDamage DamageEvent;
-	local array<TTile> OldTiles, NewTiles;
-
-	NewState = TypicalAbility_BuildGameState(Context);
-
-	AbilityContext = XComGameStateContext_Ability(NewState.GetContext());
-	UnitState = XComGameState_Unit(NewState.GetGameStateForObjectID(AbilityContext.InputContext.SourceObject.ObjectID, eReturnType_Reference));
-
-	UnitTile = UnitState.TileLocation;
-	UnitTile.Z += UnitState.UnitHeight;
-	UnitLocation = `XWORLD.GetPositionFromTileCoordinates(UnitTile);
-	DamageEvent = XComGameState_EnvironmentDamage(NewState.CreateNewStateObject(class'XComGameState_EnvironmentDamage'));
-	DamageEvent.DamageAmount = PA_HighStance_EnvDamage;
-	DamageEvent.DamageTypeTemplateName = 'NoFireExplosion';
-	DamageEvent.HitLocation = UnitLocation;
-	DamageEvent.PhysImpulse = PA_HighStance_Impulse;
-
-	// This unit gamestate should already be in the high position at this point.  Destroy stuff in these tiles.
-	// Update - only destroy stuff in the tiles that have become occupied.
-	OldUnitState = XComGameState_Unit(`XCOMHISTORY.GetGameStateForObjectID(AbilityContext.InputContext.SourceObject.ObjectID, eReturnType_Reference));
-	OldUnitState.GetVisibilityLocation(OldTiles);
-	UnitState.GetVisibilityLocation(NewTiles); 
-	class'Helpers'.static.RemoveTileSubset(DamageEvent.DamageTiles, NewTiles, OldTiles);
-
-	DamageEvent.DamageCause = UnitState.GetReference();
-	DamageEvent.DamageSource = DamageEvent.DamageCause;
-
-	return NewState;
-}
-static function X2AbilityTemplate CreatePA_SectopodLowAbility()
-{
-	local X2AbilityTemplate                 Template;
-	local X2AbilityCost_ActionPoints        ActionPointCost;
-	local X2AbilityTrigger_PlayerInput      InputTrigger;
-	local X2Effect_SetUnitValue				SetLowValue;
-	local X2Condition_UnitValue				IsHigh;
-	local X2Condition_UnitValue				IsNotImmobilized;
-	local X2Effect_RemoveEffects			RemoveEffect;
-
-	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_SectopodLow');
-	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_sectopod_lowstance";
-	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_ShowIfAvailable;
-	Template.Hostility = eHostility_Neutral;
-
-	ActionPointCost = new class'X2AbilityCost_ActionPoints';
-	ActionPointCost.iNumPoints = default.PA_SectopodLowActionPointCost;
-	ActionPointCost.bFreeCost = default.PA_SectopodLowFreeCost;
-	Template.AbilityCosts.AddItem(ActionPointCost);
-
-	Template.AbilityToHitCalc = default.DeadEye;
-	Template.AbilityTargetStyle = default.SelfTarget;
-
-	InputTrigger = new class'X2AbilityTrigger_PlayerInput';
-	Template.AbilityTriggers.AddItem(InputTrigger);
-
-	// Set up conditions for High check.
-	IsHigh = new class'X2Condition_UnitValue';
-	IsHigh.AddCheckValue(default.PA_HighLowValueName, PA_SECTOPOD_HIGH_VALUE, eCheck_Exact);
-	Template.AbilityShooterConditions.AddItem(IsHigh);
-
-	IsNotImmobilized = new class'X2Condition_UnitValue';
-	IsNotImmobilized.AddCheckValue(class'X2Ability_DefaultAbilitySet'.default.ImmobilizedValueName, 0);
-	Template.AbilityShooterConditions.AddItem(IsNotImmobilized);
-
-	Template.AbilityShooterConditions.AddItem( default.LivingShooterProperty );
-
-	// ------------
-	// Low effects.  
-	// Set value to Low.
-	SetLowValue = new class'X2Effect_SetUnitValue';
-	SetLowValue.UnitName = default.PA_HighLowValueName;
-	SetLowValue.NewValueToSet = PA_SECTOPOD_LOW_VALUE;
-	SetLowValue.CleanupType = eCleanup_BeginTactical;
-	Template.AddTargetEffect(SetLowValue);
-
-	RemoveEffect = new class'X2Effect_RemoveEffects';
-	RemoveEffect.EffectNamesToRemove.AddItem( default.PA_HeightChangeEffectName );
-	Template.AddTargetEffect( RemoveEffect );
-
-	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
-	Template.BuildVisualizationFn = PA_SectopodHighLow_BuildVisualization;
-	Template.bSkipFireAction = true;
-	
-	return Template;
-}
-
 static function X2AbilityTemplate CreatePA_SectopodLightningFieldAbility()
 {
 	local X2AbilityTemplate                 Template;
@@ -1102,59 +895,6 @@ static function X2AbilityTemplate CreatePA_SectopodLightningFieldAbility()
 	return Template;
 }
 
-simulated function PA_SectopodHighLow_BuildVisualization(XComGameState VisualizeGameState)
-{
-	local XComGameStateContext_Ability  Context;
-	local StateObjectReference          UnitRef;
-	local X2Action_AnimSetTransition	SectopodTransition;
-	local XComGameState_Unit			Sectopod;
-	local UnitValue						PA_HighLowValue;
-
-	local VisualizationActionMetadata        EmptyTrack;
-	local VisualizationActionMetadata        ActionMetadata;
-	local XComGameStateHistory		History;
-	local XComGameState_EnvironmentDamage EnvironmentDamageEvent;
-
-	History = `XCOMHISTORY;
-	Context = XComGameStateContext_Ability(VisualizeGameState.GetContext());
-	UnitRef = Context.InputContext.SourceObject;
-
-	//Configure the visualization track for the shooter
-	//****************************************************************************************
-	ActionMetadata = EmptyTrack;
-	ActionMetadata.StateObject_OldState = History.GetGameStateForObjectID(UnitRef.ObjectID, eReturnType_Reference, VisualizeGameState.HistoryIndex - 1);
-	ActionMetadata.StateObject_NewState = VisualizeGameState.GetGameStateForObjectID(UnitRef.ObjectID);
-	ActionMetadata.VisualizeActor = History.GetVisualizer(UnitRef.ObjectID);
-	Sectopod = XComGameState_Unit(ActionMetadata.StateObject_NewState);
-
-	SectopodTransition = X2Action_AnimSetTransition(class'X2Action_AnimSetTransition'.static.AddToVisualizationTree(ActionMetadata, Context, false, ActionMetadata.LastActionAdded));
-	SectopodTransition.Params.AnimName = 'HL_Stand2Crouch'; // Low by default.
-
-	if( Sectopod.GetUnitValue(PA_HighLowValueName, PA_HighLowValue) )
-	{
-		if( PA_HighLowValue.fValue == PA_SECTOPOD_HIGH_VALUE )
-		{
-			SectopodTransition.Params.AnimName = 'LL_Crouch2Stand';
-		}
-	}
-
-		//****************************************************************************************
-	//Configure the visualization tracks for the environment
-	//****************************************************************************************
-	foreach VisualizeGameState.IterateByClassType(class'XComGameState_EnvironmentDamage', EnvironmentDamageEvent)
-	{
-		ActionMetadata = EmptyTrack;
-		ActionMetadata.VisualizeActor = none;
-		ActionMetadata.StateObject_NewState = EnvironmentDamageEvent;
-		ActionMetadata.StateObject_OldState = EnvironmentDamageEvent;
-
-		// Apply damage to terrain instantly. 
-		class'X2Action_ApplyWeaponDamageToTerrain'.static.AddToVisualizationTree(ActionMetadata, Context, false, ActionMetadata.LastActionAdded); //This is my weapon, this is my gun
-
-			}
-	//****************************************************************************************
-}
-
 static function X2AbilityTemplate CreatePA_InitialStateAbility()
 {
 	local X2AbilityTemplate					Template;
@@ -1209,12 +949,8 @@ static function X2AbilityTemplate CreatePA_InitialStateAbility()
 
 defaultproperties {
 
-PA_HighLowValueName = "HighLowValue"
-PA_HeightChangeEffectName = "PA_SectopodStandUp"
-PA_WrathCannonAbilityName = "PA_WrathCannon_Ability"
+PA_WrathCannonAbilityName = "PA_WrathCannon"
 PA_WrathCannonStage1AbilityName = "PA_WrathCannonStage1"
 PA_WrathCannonStage2AbilityName = "PA_WrathCannonStage2"
 PA_WrathCannonStage1EffectName = "WrathCannonStage1Effect"
-PA_HeightChangeEffectName = "PA_SectopodStandUp"
-PA_HighLowValueName = "PA_HighLowValue"
 }
