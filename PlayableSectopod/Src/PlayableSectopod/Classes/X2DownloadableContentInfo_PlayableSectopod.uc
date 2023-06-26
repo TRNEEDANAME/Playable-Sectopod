@@ -117,6 +117,21 @@ static function bool IsResearchInHistory(name ResearchName)
         }
     }
     return false;
+}
 
+static function bool AbilityTagExpandHandler(string InString, out string OutString)
+{
+    local name TagText;
 
+    TagText = name(InString);
+
+    switch (TagText)
+    {
+		//		TAG NAME IN LOCALISATION					STRING		FROM THIS CLASS				CONFIG		VALUE					FOUND STRING
+    	case 'TR_Sectopod_AdditionalAP':		OutString = string(class'X2Ability_PASectopod'.default.PA_SectopodInitialStateActionPoints);	return true;
+    	case 'TR_Sectopod_HealPerTurn':		OutString = string(class'X2Ability_PASectopod'.default.PA_SectopodInitialStateHealPerTurn);	return true;
+    	case 'TR_Sectopod_MaxHeal':		OutString = string(class'X2Ability_PASectopod'.default.PA_SectopodInitialStateMaxHeal);	return true;
+
+   		default: 
+    }  
 }

@@ -188,9 +188,9 @@ LocHelpText="Transition to Low Stance. This action is free."
 LocFlyOverText="Low Stance"
 
 [PA_SectopodInitialState X2AbilityTemplate]
-LocFriendlyName="PLACEHOLDER FOR INITIAL STATE"
-LocLongDescription="PLACEHOLDER DESCRIPTION"
-LocHelpText="PLACEHOLDER TEXT"
+LocFriendlyName="The sectopod get <Ability:TR_Sectopod_AdditionalAP/> points and heal for <Ability:TR_Sectopod_HealPerTurn/> for a maximum of <Ability:TR_Sectopod_MaxHeal/>"
+LocLongDescription="Initial state"
+LocHelpText="Initial State"
 
 ; ============================================================
 ; The rest 

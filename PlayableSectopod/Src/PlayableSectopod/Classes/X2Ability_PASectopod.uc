@@ -35,7 +35,10 @@ var config int PA_SectopodLightningFieldCooldown;
 // The following variables is for the Initial states (additional Actions point and the Immunities).
 var config bool PA_SectopodInitialStateDontDisplayInAbilitySummary;
 var config int PA_SectopodInitialStateActionPoints;
+var config int PA_SectopodInitialStateHealPerTurn;
+var config int PA_SectopodInitialStateMaxHeal;
 
+var config bool DoesPA_SectopodInitialStateGiveRegeneration;
 
 var privatewrite name PA_WrathCannonAbilityName;
 var deprecated name PA_WrathCannonStage1DelayEffectName;
@@ -902,6 +905,7 @@ static function X2AbilityTemplate CreatePA_InitialStateAbility()
 	local X2Effect_OverrideDeathAction      DeathActionEffect;
 	local X2Effect_DamageImmunity DamageImmunity;
 	local X2Effect_TurnStartActionPoints ThreeActionPoints;
+	local X2Effect_Regeneration				RegenerationEffect;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_SectopodInitialState');
 
@@ -940,6 +944,18 @@ static function X2AbilityTemplate CreatePA_InitialStateAbility()
 	ThreeActionPoints.NumActionPoints = default.PA_SectopodInitialStateActionPoints;
 	ThreeActionPoints.bInfiniteDuration = true;
 	Template.AddTargetEffect(ThreeActionPoints);
+
+	if (default.DoesPA_SectopodInitialStateGiveRegeneration)
+	{
+			// Build the regeneration effect
+			RegenerationEffect = new class'X2Effect_Regeneration';
+			RegenerationEffect.BuildPersistentEffect(1, true, true, false, eGameRule_PlayerTurnBegin);
+			RegenerationEffect.SetDisplayInfo(ePerkBuff_Passive, Template.LocFriendlyName, Template.GetMyLongDescription(), Template.IconImage, false, , Template.AbilitySourceName);
+			RegenerationEffect.HealAmount = default.PA_SectopodInitialStateHealPerTurn;
+			RegenerationEffect.MaxHealAmount = default.PA_SectopodInitialStateMaxHeal;
+			RegenerationEffect.HealthRegeneratedName = 'StasisVestHealthRegenerated';
+			Template.AddTargetEffect(RegenerationEffect);
+	}
 
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
 
