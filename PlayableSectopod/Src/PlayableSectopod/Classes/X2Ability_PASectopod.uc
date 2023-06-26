@@ -34,11 +34,11 @@ var config int PA_SectopodLightningFieldCooldown;
 
 // The following variables is for the Initial states (additional Actions point and the Immunities).
 var config bool PA_SectopodInitialStateDontDisplayInAbilitySummary;
+var config bool DoesPA_SectopodInitialStateGiveRegeneration;
 var config int PA_SectopodInitialStateActionPoints;
 var config int PA_SectopodInitialStateHealPerTurn;
 var config int PA_SectopodInitialStateMaxHeal;
 
-var config bool DoesPA_SectopodInitialStateGiveRegeneration;
 
 var privatewrite name PA_WrathCannonAbilityName;
 var deprecated name PA_WrathCannonStage1DelayEffectName;
