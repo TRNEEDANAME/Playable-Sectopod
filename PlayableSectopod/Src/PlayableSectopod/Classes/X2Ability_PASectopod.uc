@@ -39,6 +39,8 @@ var config int PA_SectopodInitialStateActionPoints;
 var config int PA_SectopodInitialStateHealPerTurn;
 var config int PA_SectopodInitialStateMaxHeal;
 
+var config int PA_SectopodWreckingWallCooldown;
+var config int PA_SectopodWreckingWallActionPoints;
 
 var privatewrite name PA_WrathCannonAbilityName;
 var deprecated name PA_WrathCannonStage1DelayEffectName;
