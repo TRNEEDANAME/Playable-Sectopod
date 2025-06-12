@@ -40,6 +40,48 @@ BriefSummary="Sectopod Whrath Cannon"
 TacticalText="<Bullet/> Sectopod Warth Cannon. <Bullet/> Not usable by human soldiers -- No, DON'T EVEN THINK ABOUT IT"
 AbilityDescName="Sectopod Wrath Cannon"
 
+[PA_WrathCannon X2AbilityTemplate]
+LocFriendlyName="Wrath Cannon"
+LocLongDescription="The Wrath Cannon is an extremely high energy attack that deals damage in a long line."
+LocHelpText="Fire a devastating energy attack that can penetrate multiple targets."
+LocFlyOverText="Wrath Cannon"
+
+[PA_WrathCannonStage1 X2AbilityTemplate]
+LocFriendlyName="Wrath Cannon"
+LocLongDescription="The Wrath Cannon is an extremely high energy attack that deals damage in a long line. The firing of the cannon requires the Sectopod to fully charge a series of emitters, which might give quick victims a chance to run and hide."
+LocHelpText="Power up and fire a devastating attack that can penetrate multiple targets. Takes one turn to prepare."
+LocFlyOverText="Wrath Cannon"
+
+[PA_Blaster X2AbilityTemplate]
+LocFriendlyName="Fire Blaster"
+LocLongDescription="The Sectopod has a back-mounted utility blaster that can be used every action to deal with most threats. This weapon can fire in any direction."
+LocHelpText="Fire the Sectopod Blaster at a target."
+LocFlyOverText="Blaster"
+
+[PA_BlasterDuringCannon X2AbilityTemplate]
+LocFriendlyName="Fire Blaster"
+LocLongDescription="The Sectopod has a back-mounted utility blaster that can be used every action to deal with most threats. This weapon can fire in any direction."
+LocHelpText="Fire the Sectopod Blaster at a target."
+LocFlyOverText="Blaster"
+
+[PA_SectopodHigh X2AbilityTemplate]
+LocFriendlyName="High Stance"
+LocLongDescription="The Sectopod can extend its legs to improve its range and weapon reach, and allow it to use the Wrath Cannon against elevated targets."
+LocHelpText="Transition to High Stance, granting a height bonus against ground enemies. This action is free."
+LocFlyOverText="High Stance"
+
+[PA_SectopodLightningField X2AbilityTemplate]
+LocFriendlyName="Lightning Field"
+LocLongDescription="The Sectopod can emit a blast of lightning in a circular area around itself whenever it detects an enemy in melee range."
+LocHelpText="Discharge an electric attack in a radius around the Sectopod."
+LocFlyOverText="Lightning Field"
+
+[PA_SectopodLow X2AbilityTemplate]
+LocFriendlyName="Low Stance"
+LocLongDescription="The Sectopod can return to low stance, to target enemies at ground level with the Wrath Cannon."
+LocHelpText="Transition to Low Stance. This action is free."
+LocFlyOverText="Low Stance"
+
 [XGCharacterGenerator_Sectopod]
 SectopodFirstName="Sectopod"
 SectopodLastNamePrefix="Sectopod"

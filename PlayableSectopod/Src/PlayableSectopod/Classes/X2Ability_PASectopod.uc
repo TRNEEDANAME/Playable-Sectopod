@@ -68,6 +68,8 @@ static function array<X2DataTemplate> CreateTemplates()
 	Templates.AddItem(PurePassive('PA_SectopodImmunities', "img:///UILibrary_PerkIcons.UIPerk_immunities"));
 	Templates.AddItem(CreatePA_InitialStateAbility());
 
+	Templates.AddItem(CreatePA_SectopodWreckingWallAbility());
+
 	return Templates;
 }
 
@@ -962,6 +964,63 @@ static function X2AbilityTemplate CreatePA_InitialStateAbility()
 	return Template;
 }
 
+static function X2AbilityTemplate CreatePA_SectopodWreckingWallAbility()
+{
+	local X2AbilityTemplate						Template;
+	local X2AbilityCooldown                     Cooldown;
+	local X2Effect_GrantActionPoints            PointEffect;
+	local X2Effect_Persistent			        ActionPointPersistEffect;
+	local X2Effect_PersistentTraversalChange    WallbreakEffect;
+
+	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_BreakWall');
+
+	Cooldown = new class'X2AbilityCooldown';
+	Cooldown.iNumTurns = default.PA_SectopodWreckingWallCooldown;
+	Template.AbilityCooldown = Cooldown;
+
+	Template.AbilityCosts.AddItem(default.FreeActionCost);
+
+	Template.AbilitySourceName = 'eAbilitySource_Perk';
+	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_AlwaysShow;
+	Template.Hostility = eHostility_Neutral;
+	Template.IconImage = "img:///UILibrary_XPACK_Common.PerkIcons.UIPerk_vanishingwind";
+
+	Template.AbilityToHitCalc = default.DeadEye;
+	Template.AbilityTargetStyle = default.SelfTarget;
+	Template.AbilityTriggers.AddItem(default.PlayerInputTrigger); 
+
+	Template.AbilityShooterConditions.AddItem(default.LivingShooterProperty);
+	Template.AddShooterEffectExclusions();
+
+	PointEffect = new class'X2Effect_GrantActionPoints';
+	PointEffect.NumActionPoints = default.PA_SectopodWreckingWallActionPoints;
+	PointEffect.PointType = class'X2CharacterTemplateManager'.default.StandardActionPoint;
+	Template.AddTargetEffect(PointEffect);
+
+	// A persistent effect for the effects code to attach a duration to
+	ActionPointPersistEffect = new class'X2Effect_Persistent';
+	ActionPointPersistEffect.EffectName = 'WreckingWallEffect';
+	ActionPointPersistEffect.BuildPersistentEffect( 1, false, true, false, eGameRule_PlayerTurnEnd );
+	Template.AddTargetEffect(ActionPointPersistEffect);
+
+	WallbreakEffect = new class'X2Effect_PersistentTraversalChange';
+	WallbreakEffect.AddTraversalChange(eTraversal_BreakWall, true);
+	WallbreakEffect.EffectName = 'WreckingWallBreakEffect';
+	WallbreakEffect.DuplicateResponse = eDupe_Ignore;
+	WallbreakEffect.BuildPersistentEffect(1, false, true, false, eGameRule_PlayerTurnEnd);
+	WallbreakEffect.TargetConditions.AddItem(AbilityCondition);
+	Template.AddTargetEffect(WallbreakEffect);
+
+	Template.bShowActivation = true;
+	Template.bSkipExitCoverWhenFiring = true;
+
+	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
+	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;
+
+	Template.PostActivationEvents.AddItem('OverdriveActivated');
+	
+	return Template;
+}
 
 defaultproperties {
 

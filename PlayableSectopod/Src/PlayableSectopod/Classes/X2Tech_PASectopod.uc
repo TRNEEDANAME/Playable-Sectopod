@@ -1,4 +1,4 @@
-class PA_SectopodTech extends X2StrategyElement config(PlayableAdvent);
+class X2Tech_PASectopod extends X2StrategyElement config(PlayableAdvent);
 
 var config int SectopodTech_Days;
 var config int SectopodTech_SupplyCost;

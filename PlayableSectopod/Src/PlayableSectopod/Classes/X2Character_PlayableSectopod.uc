@@ -1,6 +1,8 @@
 class X2Character_PlayableSectopod extends X2Character config(GameData_CharacterStats);
 
 var config bool ALIENS_APPEAR_IN_BASE;
+var config(PlayableSectopod) bool CanWallClimb;
+var config(PlayableSectopod) bool BreakWalls;
 
 static function array<X2DataTemplate> CreateTemplates()
 {
@@ -31,7 +33,7 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	CharTemplate.UnitSize = 2;
 	// Traversal Rules
 	CharTemplate.bCanUse_eTraversal_Normal = true;
-	CharTemplate.bCanUse_eTraversal_ClimbOver = false;
+	CharTemplate.bCanUse_eTraversal_ClimbOver = true;
 	CharTemplate.bCanUse_eTraversal_ClimbOnto = true;
 	CharTemplate.bCanUse_eTraversal_ClimbLadder = false;
 	CharTemplate.bCanUse_eTraversal_DropDown = true;
@@ -40,9 +42,9 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	CharTemplate.bCanUse_eTraversal_BreakWindow = false;
 	CharTemplate.bCanUse_eTraversal_KickDoor = false;
 	CharTemplate.bCanUse_eTraversal_JumpUp = false;
-	CharTemplate.bCanUse_eTraversal_WallClimb = false;
-	CharTemplate.bCanUse_eTraversal_BreakWall = false;
-	CharTemplate.bAppearanceDefinesPawn = false;    
+	CharTemplate.bCanUse_eTraversal_WallClimb = default.CanWallClimb;
+	CharTemplate.bCanUse_eTraversal_BreakWall = default.BreakWalls;
+	CharTemplate.bAppearanceDefinesPawn = true;    
 	CharTemplate.bCanTakeCover = false;
 	CharTemplate.bAppearInBase = default.ALIENS_APPEAR_IN_BASE;
 
@@ -50,7 +52,7 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	CharTemplate.bIsAdvent = false;
 	CharTemplate.bIsCivilian = false;
 	CharTemplate.bIsPsionic = false;
-	CharTemplate.bIsRobotic = false;
+	CharTemplate.bIsRobotic = true;
 	CharTemplate.bIsSoldier = true;
 
 	CharTemplate.bCanBeTerrorist = false;
@@ -60,10 +62,10 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	CharTemplate.bCanBeRevived = true;
 	CharTemplate.bUsePoolSoldiers = true;
 	CharTemplate.bStaffingAllowed = true;
-	CharTemplate.bAppearInBase = true;
+	CharTemplate.bAppearInBase = false;
 	CharTemplate.bWearArmorInBase = true;
 	CharTemplate.bAllowSpawnFromATT = false;
-	CharTemplate.bUsesWillSystem = true;
+	CharTemplate.bUsesWillSystem = false;
 	CharTemplate.bIsTooBigForArmory = true;
 
 	CharTemplate.DefaultSoldierClass = 'SectopodClass';
@@ -77,6 +79,8 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	CharTemplate.Abilities.AddItem('Interact_UseElevator');
 	CharTemplate.Abilities.AddItem('Interact_MarkSupplyCrate');
 	CharTemplate.Abilities.AddItem('Interact_ActivateAscensionGate');
+	CharTemplate.Abilities.AddItem('PA_SectopodInitialState');
+	CharTemplate.Abilities.AddItem('PA_WrathCannon');
 	CharTemplate.Abilities.AddItem('CarryUnit');
 	CharTemplate.Abilities.AddItem('PutDownUnit');
 	CharTemplate.Abilities.AddItem('Evac');
@@ -91,25 +95,12 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	//CharTemplate.Abilities.AddItem('HunkerDown');
 	CharTemplate.Abilities.AddItem('DisableConsumeAllPoints');
 	CharTemplate.Abilities.AddItem('Revive');
-	//CharTemplate.Abilities.AddItem('DevastatingPunch');
+	CharTemplate.Abilities.AddItem('PA_Teleport');
 
-	// bondmate abilities
-	//CharTemplate.Abilities.AddItem('BondmateResistantWill');
-	CharTemplate.Abilities.AddItem('BondmateSolaceCleanse');
-	CharTemplate.Abilities.AddItem('BondmateSolacePassive');
-	CharTemplate.Abilities.AddItem('BondmateTeamwork');
-	CharTemplate.Abilities.AddItem('BondmateTeamwork_Improved');
-	CharTemplate.Abilities.AddItem('BondmateSpotter_Aim');
-	CharTemplate.Abilities.AddItem('BondmateSpotter_Aim_Adjacency');
-	//CharTemplate.Abilities.AddItem('BondmateSpotter_Crit');
-	//CharTemplate.Abilities.AddItem('BondmateSpotter_Crit_Adjacency');
-	//CharTemplate.Abilities.AddItem('BondmateReturnFire_Passive');
-	//CharTemplate.Abilities.AddItem('BondmateReturnFire');
-	//CharTemplate.Abilities.AddItem('BondmateReturnFire_Adjacency');
-	//CharTemplate.Abilities.AddItem('BondmateReturnFire_Improved_Passive');
-	//CharTemplate.Abilities.AddItem('BondmateReturnFire_Improved');
-	//CharTemplate.Abilities.AddItem('BondmateReturnFire_Improved_Adjacency');
-	CharTemplate.Abilities.AddItem('BondmateDualStrike');
+	if (!default.BreakWalls)
+	{
+		CharTemplate.Abilities.AddItem('PA_BreakWall');
+	}
 
 	CharTemplate.strTargetIconImage = class'UIUtilities_Image'.const.TargetIcon_Alien;
 	CharTemplate.strAutoRunNonAIBT = "SoldierAutoRunTree";
