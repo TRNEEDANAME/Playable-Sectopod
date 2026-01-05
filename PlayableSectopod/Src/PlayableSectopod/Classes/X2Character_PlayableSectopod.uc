@@ -80,7 +80,7 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	CharTemplate.Abilities.AddItem('Interact_MarkSupplyCrate');
 	CharTemplate.Abilities.AddItem('Interact_ActivateAscensionGate');
 	CharTemplate.Abilities.AddItem('PA_SectopodInitialState');
-	CharTemplate.Abilities.AddItem('PA_WrathCannon');
+	//CharTemplate.Abilities.AddItem('PA_WrathCannon');
 	CharTemplate.Abilities.AddItem('CarryUnit');
 	CharTemplate.Abilities.AddItem('PutDownUnit');
 	CharTemplate.Abilities.AddItem('Evac');

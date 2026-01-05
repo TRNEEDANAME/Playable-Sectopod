@@ -1010,7 +1010,6 @@ static function X2AbilityTemplate CreatePA_SectopodWreckingWallAbility()
 	WallbreakEffect.EffectName = 'WreckingWallBreakEffect';
 	WallbreakEffect.DuplicateResponse = eDupe_Ignore;
 	WallbreakEffect.BuildPersistentEffect(1, false, true, false, eGameRule_PlayerTurnEnd);
-	WallbreakEffect.TargetConditions.AddItem(AbilityCondition);
 	Template.AddTargetEffect(WallbreakEffect);
 
 	Template.bShowActivation = true;
