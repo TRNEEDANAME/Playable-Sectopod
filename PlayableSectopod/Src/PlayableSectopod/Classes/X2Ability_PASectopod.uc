@@ -42,6 +42,11 @@ var config int PA_SectopodInitialStateMaxHeal;
 var config int PA_SectopodWreckingWallCooldown;
 var config int PA_SectopodWreckingWallActionPoints;
 
+// Teleport
+var config int PA_SectopodShortTeleportActionPointCost;
+var config int PA_SectopodShortTeleportCooldown;
+var config int PA_SectopodShortTeleportRange;
+
 var privatewrite name PA_WrathCannonAbilityName;
 var deprecated name PA_WrathCannonStage1DelayEffectName;
 
@@ -71,6 +76,7 @@ static function array<X2DataTemplate> CreateTemplates()
 	Templates.AddItem(CreatePA_InitialStateAbility());
 
 	Templates.AddItem(CreatePA_SectopodWreckingWallAbility());
+	Templates.AddItem(CreatePA_SectopodShortTeleportAbility());
 
 	return Templates;
 }
@@ -80,7 +86,7 @@ static function X2AbilityTemplate CreatePA_WrathCannonAbility()
 {
 	local X2AbilityTemplate Template;
 	local X2AbilityCost_ActionPoints ActionPointCost;
-	local X2AbilityCooldown_LocalAndGlobal Cooldown;
+	local X2AbilityCooldown Cooldown;
 	local X2AbilityMultiTarget_Line         LineMultiTarget;
 	local X2AbilityTarget_Cursor CursorTarget;
 	local X2Condition_UnitProperty UnitProperty;
@@ -97,7 +103,7 @@ static function X2AbilityTemplate CreatePA_WrathCannonAbility()
 	ActionPointCost.bConsumeAllPoints = default.PA_WrathCannonConsumeAllPoints;
 	Template.AbilityCosts.AddItem(ActionPointCost);
 
-	Cooldown = new class'X2AbilityCooldown_LocalAndGlobal';
+	Cooldown = new class'X2AbilityCooldown';
 	Cooldown.iNumTurns = default.PA_WrathCannonCooldown;
 	Template.AbilityCooldown = Cooldown;
 
@@ -966,62 +972,63 @@ static function X2AbilityTemplate CreatePA_InitialStateAbility()
 	return Template;
 }
 
-static function X2AbilityTemplate CreatePA_SectopodWreckingWallAbility()
+static function X2DataTemplate CreatePA_SectopodShortTeleportAbility()
 {
-	local X2AbilityTemplate						Template;
-	local X2AbilityCooldown                     Cooldown;
-	local X2Effect_GrantActionPoints            PointEffect;
-	local X2Effect_Persistent			        ActionPointPersistEffect;
-	local X2Effect_PersistentTraversalChange    WallbreakEffect;
+	local X2AbilityTemplate Template;
+	local X2AbilityCost_ActionPoints ActionPointCost;
+	local X2AbilityCooldown Cooldown;
+	local X2AbilityTarget_Cursor CursorTarget;
+	local X2AbilityMultiTarget_Radius RadiusMultiTarget;
+	local X2AbilityTrigger_PlayerInput InputTrigger;
 
-	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_BreakWall');
+	`CREATE_X2ABILITY_TEMPLATE(Template, 'SectopodTeleport');
+
+	Template.AbilitySourceName = 'eAbilitySource_Standard';
+	Template.eAbilityIconBehaviorHUD = EAbilityIconBehavior_AlwaysShow;
+	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_codex_teleport";
+
+	ActionPointCost = new class'X2AbilityCost_ActionPoints';
+	ActionPointCost.iNumPoints = default.PA_SectopodShortTeleportActionPointCost;
+	Template.AbilityCosts.AddItem(ActionPointCost);
 
 	Cooldown = new class'X2AbilityCooldown';
-	Cooldown.iNumTurns = default.PA_SectopodWreckingWallCooldown;
+	Cooldown.iNumTurns = default.PA_SectopodShortTeleportCooldown;
 	Template.AbilityCooldown = Cooldown;
 
-	Template.AbilityCosts.AddItem(default.FreeActionCost);
+	Template.TargetingMethod = class'X2TargetingMethod_Teleport';
 
-	Template.AbilitySourceName = 'eAbilitySource_Perk';
-	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_AlwaysShow;
-	Template.Hostility = eHostility_Neutral;
-	Template.IconImage = "img:///UILibrary_XPACK_Common.PerkIcons.UIPerk_vanishingwind";
+	InputTrigger = new class'X2AbilityTrigger_PlayerInput';
+	Template.AbilityTriggers.AddItem(InputTrigger);
 
 	Template.AbilityToHitCalc = default.DeadEye;
-	Template.AbilityTargetStyle = default.SelfTarget;
-	Template.AbilityTriggers.AddItem(default.PlayerInputTrigger); 
 
+	CursorTarget = new class'X2AbilityTarget_Cursor';
+	CursorTarget.bRestrictToSquadsightRange = true;
+	CursorTarget.FixedAbilityRange = default.PA_SectopodShortTeleportRange;     // yes there is.
+	Template.AbilityTargetStyle = CursorTarget;
+
+	RadiusMultiTarget = new class'X2AbilityMultiTarget_Radius';
+	RadiusMultiTarget.fTargetRadius = 0.25; // small amount so it just grabs one tile
+	Template.AbilityMultiTargetStyle = RadiusMultiTarget;
+
+	// Shooter Conditions
 	Template.AbilityShooterConditions.AddItem(default.LivingShooterProperty);
 	Template.AddShooterEffectExclusions();
 
-	PointEffect = new class'X2Effect_GrantActionPoints';
-	PointEffect.NumActionPoints = default.PA_SectopodWreckingWallActionPoints;
-	PointEffect.PointType = class'X2CharacterTemplateManager'.default.StandardActionPoint;
-	Template.AddTargetEffect(PointEffect);
+	//// Damage Effect
+	Template.AbilityMultiTargetConditions.AddItem(default.LivingTargetUnitOnlyProperty);
 
-	// A persistent effect for the effects code to attach a duration to
-	ActionPointPersistEffect = new class'X2Effect_Persistent';
-	ActionPointPersistEffect.EffectName = 'WreckingWallEffect';
-	ActionPointPersistEffect.BuildPersistentEffect( 1, false, true, false, eGameRule_PlayerTurnEnd );
-	Template.AddTargetEffect(ActionPointPersistEffect);
+	Template.ModifyNewContextFn = class'X2Ability_Cyberus'.static.Teleport_ModifyActivatedAbilityContext;
+	Template.BuildNewGameStateFn = class'X2Ability_Cyberus'.static.Teleport_BuildGameState;
+	Template.BuildVisualizationFn = class'X2Ability_Cyberus'.static.Teleport_BuildVisualization;
+	Template.CinescriptCameraType = "Cyberus_Teleport";
+//BEGIN AUTOGENERATED CODE: Template Overrides 'Teleport'
+	Template.bFrameEvenWhenUnitIsHidden = true;
+//END AUTOGENERATED CODE: Template Overrides 'Teleport'
 
-	WallbreakEffect = new class'X2Effect_PersistentTraversalChange';
-	WallbreakEffect.AddTraversalChange(eTraversal_BreakWall, true);
-	WallbreakEffect.EffectName = 'WreckingWallBreakEffect';
-	WallbreakEffect.DuplicateResponse = eDupe_Ignore;
-	WallbreakEffect.BuildPersistentEffect(1, false, true, false, eGameRule_PlayerTurnEnd);
-	Template.AddTargetEffect(WallbreakEffect);
-
-	Template.bShowActivation = true;
-	Template.bSkipExitCoverWhenFiring = true;
-
-	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
-	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;
-
-	Template.PostActivationEvents.AddItem('OverdriveActivated');
-	
 	return Template;
 }
+
 
 defaultproperties {
 

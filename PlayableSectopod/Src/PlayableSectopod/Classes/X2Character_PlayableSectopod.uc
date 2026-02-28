@@ -1,8 +1,7 @@
 class X2Character_PlayableSectopod extends X2Character config(GameData_CharacterStats);
 
 var config bool ALIENS_APPEAR_IN_BASE;
-var config(PlayableSectopod) bool CanWallClimb;
-var config(PlayableSectopod) bool BreakWalls;
+var config(PlayableSectopod) bool ClimbWall;
 
 static function array<X2DataTemplate> CreateTemplates()
 {
@@ -42,8 +41,14 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	CharTemplate.bCanUse_eTraversal_BreakWindow = false;
 	CharTemplate.bCanUse_eTraversal_KickDoor = false;
 	CharTemplate.bCanUse_eTraversal_JumpUp = false;
-	CharTemplate.bCanUse_eTraversal_WallClimb = default.CanWallClimb;
-	CharTemplate.bCanUse_eTraversal_BreakWall = default.BreakWalls;
+	CharTemplate.bCanUse_eTraversal_WallClimb = default.ClimbWall;
+	if (default.ClimbWall) {
+		CharTemplate.bCanUse_eTraversal_BreakWall = false;
+	}
+	else {
+		CharTemplate.bCanUse_eTraversal_BreakWall = true;
+	}
+	CharTemplate.bCanUse_eTraversal_BreakWall = true;
 	CharTemplate.bAppearanceDefinesPawn = true;    
 	CharTemplate.bCanTakeCover = false;
 	CharTemplate.bAppearInBase = default.ALIENS_APPEAR_IN_BASE;
@@ -79,7 +84,7 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	CharTemplate.Abilities.AddItem('Interact_UseElevator');
 	CharTemplate.Abilities.AddItem('Interact_MarkSupplyCrate');
 	CharTemplate.Abilities.AddItem('Interact_ActivateAscensionGate');
-	CharTemplate.Abilities.AddItem('PA_SectopodInitialState');
+	CharTemplate.Abilities.AddItem('SectopodInitialState');
 	//CharTemplate.Abilities.AddItem('PA_WrathCannon');
 	CharTemplate.Abilities.AddItem('CarryUnit');
 	CharTemplate.Abilities.AddItem('PutDownUnit');
@@ -95,12 +100,7 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	//CharTemplate.Abilities.AddItem('HunkerDown');
 	CharTemplate.Abilities.AddItem('DisableConsumeAllPoints');
 	CharTemplate.Abilities.AddItem('Revive');
-	CharTemplate.Abilities.AddItem('PA_Teleport');
-
-	if (!default.BreakWalls)
-	{
-		CharTemplate.Abilities.AddItem('PA_BreakWall');
-	}
+	CharTemplate.Abilities.AddItem('PA_ShortTeleport');
 
 	CharTemplate.strTargetIconImage = class'UIUtilities_Image'.const.TargetIcon_Alien;
 	CharTemplate.strAutoRunNonAIBT = "SoldierAutoRunTree";

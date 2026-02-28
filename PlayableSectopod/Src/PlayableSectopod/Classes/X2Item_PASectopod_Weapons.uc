@@ -90,7 +90,7 @@ static function X2DataTemplate CreateTemplate_PA_Sectopod_WrathCannon_WPN()
 	Template.iEnvironmentDamage = default.PA_WrathCannon_EnvironmentDamage;
 	Template.iIdealRange = default.PA_WrathCannon_IdealRange;
 
-	Template.Abilities.AddItem('PA_WrathCannon');
+	Template.Abilities.AddItem('WrathCannonStage1');
 
 	Template.DamageTypeTemplateName = 'Heavy';
 

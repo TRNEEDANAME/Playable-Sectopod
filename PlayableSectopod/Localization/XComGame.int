@@ -145,7 +145,7 @@ AbilityDescName="Wrath Cannon"
 ; Sectopod abilities
 ; ============================================================
 
-[PA_WrathCannon_Ability X2AbilityTemplate]
+[PA_WrathCannon X2AbilityTemplate]
 LocFriendlyName="Wrath Cannon"
 LocLongDescription="The Wrath Cannon is an extremely high energy attack that deals damage in a long line."
 LocHelpText="Fire a devastating energy attack that can penetrate multiple targets."
@@ -191,6 +191,21 @@ LocFlyOverText="Low Stance"
 LocFriendlyName="The sectopod get <Ability:TR_Sectopod_AdditionalAP/> points and heal for <Ability:TR_Sectopod_HealPerTurn/> for a maximum of <Ability:TR_Sectopod_MaxHeal/>"
 LocLongDescription="Initial state"
 LocHelpText="Initial State"
+
+[PA_SectopodImmunities X2AbilityTemplate]
+LocFriendlyName="Sectopod Immunities"
+LocLongDescription="The Sectopod is immune to fire, poison and mental attacks."
+LocHelpText="The Sectopod is immune to fire, poison and mental attacks."
+
+[PA_BreakWall X2AbilityTemplate]
+LocFriendlyName="Wrecking Ball"
+LocLongDescription="The Sectopod can destroy walls and other structures."
+
+[SectopodTeleport X2AbilityTemplate]
+LocFriendlyName="Short range teleport"
+LocLongDescription="The Sectopod can teleport a short range."
+LocHelpText="Short range teleport."
+LocFlyOverText="Teleport"
 
 ; ============================================================
 ; The rest 
