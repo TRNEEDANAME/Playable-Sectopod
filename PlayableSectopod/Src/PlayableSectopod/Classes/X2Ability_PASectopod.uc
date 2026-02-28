@@ -75,7 +75,6 @@ static function array<X2DataTemplate> CreateTemplates()
 	Templates.AddItem(PurePassive('PA_SectopodImmunities', "img:///UILibrary_PerkIcons.UIPerk_immunities"));
 	Templates.AddItem(CreatePA_InitialStateAbility());
 
-	Templates.AddItem(CreatePA_SectopodWreckingWallAbility());
 	Templates.AddItem(CreatePA_SectopodShortTeleportAbility());
 
 	return Templates;

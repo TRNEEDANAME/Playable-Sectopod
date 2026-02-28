@@ -100,7 +100,7 @@ static function X2CharacterTemplate CreateTemplate_Sectopod()
 	//CharTemplate.Abilities.AddItem('HunkerDown');
 	CharTemplate.Abilities.AddItem('DisableConsumeAllPoints');
 	CharTemplate.Abilities.AddItem('Revive');
-	CharTemplate.Abilities.AddItem('PA_ShortTeleport');
+	CharTemplate.Abilities.AddItem('SectopodTeleport');
 
 	CharTemplate.strTargetIconImage = class'UIUtilities_Image'.const.TargetIcon_Alien;
 	CharTemplate.strAutoRunNonAIBT = "SoldierAutoRunTree";
